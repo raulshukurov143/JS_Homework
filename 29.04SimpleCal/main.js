@@ -15,7 +15,7 @@ addBtn.addEventListener("click", function () {
   }
 });
 subsBtn.addEventListener("click", function () {
-  if (value1.value === "" || Value2.value === "") {
+  if (value1.value === "" || value2.value === "") {
     alert("please fill in the value lines");
   } else {
     content.innerText = +value1.value - +value2.value;
