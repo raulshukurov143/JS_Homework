@@ -1,22 +1,39 @@
-let form=document.querySelector("#formId")
-let submit=document.querySelector(".btn-primary")
-let nameInput=document.querySelector("#name")
-let emailInput=document.querySelector("#email")
-submit.setAttribute("disabled",null)
-submit.disabled=true
+let form = document.querySelector("form");
+let allInputs = document.querySelectorAll(".form-control");
+let submitBtn=document.querySelector("#submit")
 
- function  submitDisabled(){
-  if(nameInput.value && emailInput.value){
-        submit.disabled=false
-    }else{
-        submit.disabled=true
+
+let id = new URLSearchParams(window.location.search).get("id");
+
+function check() {
+    if (allInputs[0].value && allInputs[1].value) {
+      submitBtn.removeAttribute("disabled");
+    } else {
+      submitBtn.setAttribute("disabled", "");
     }
- }
- submitDisabled()
-
- function submitCard(){
-    submit.addEventListener("click",function(){
+  }
+  check();
+  allInputs[0].addEventListener("input", function () {
+    check();
+  });
+  allInputs[1].addEventListener("input", function () {
+    check();
+  });
+form.addEventListener("submit",function(e){
+    e.preventDefault();
+    let obj={
+        name:allInputs[0].value,
+        email:allInputs[1].value
+    };
+    fetch(`http://localhost:8300/Users`,{
+        method:"POST",
+        headers:{
+            "Content-type":"application/json",
         
+        },
+        body: JSON.stringify(obj)
+
     })
-    
- }
+    window.location.href=`./index.html`
+
+})
